@@ -1,2 +1,3 @@
-# sculu-nf
-Nextflow implementation of SCULU
+# Nextflow implementation of SCULU
+
+Stuff here.
