@@ -20,7 +20,13 @@ RUN wget -q -O RepeatModeler.tgz \
     wget -q -O RepeatMasker.tgz \
     https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.6.tar.gz && \
     tar xf RepeatMasker.tgz && \
-    rm RepeatMasker.tgz RepeatModeler.tgz
+    rm RepeatMasker.tgz RepeatModeler.tgz && \
+    cd /usr/local/perl/RepeatModeler/ && \
+    wget http://www.repeatmasker.org/~rhubley/Refiner-205-3.gz && \
+    gunzip Refiner-205-3.gz && \
+    mv Refiner-205-3 Refiner && \
+    chmod +x Refiner
+
 ENV PATH=/usr/local/perl/RepeatModeler:/usr/local/perl/RepeatModeler/util:$PATH
 ENV PERL5LIB=/usr/local/perl/RepeatModeler:/usr/local/perl/RepeatMasker
 
