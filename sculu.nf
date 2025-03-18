@@ -42,7 +42,7 @@ process make_components {
 
 // --------------------------------------------------
 process process_components {
-    publishDir 'results', mode: 'cope'
+    publishDir 'results', mode: 'copy'
 
     input:
         path consensi
