@@ -28,7 +28,7 @@ process make_components {
         path 'sculu-out/debug.log', emit: logfile
         path 'sculu-out/consensi_cluster/blast.tsv', emit: consensi_blast
 
-    container 'traviswheelerlab/sculu-rs:0.2.0'
+    container 'traviswheelerlab/sculu-rs:0.2.1'
 
     script:
     """
@@ -56,7 +56,7 @@ process process_components {
         path "sculu-out/${component}/final.fa"
         path "sculu-out/${component}.log"
 
-    container 'traviswheelerlab/sculu-rs:0.2.0'
+    container 'traviswheelerlab/sculu-rs:0.2.1'
 
     script:
     """
