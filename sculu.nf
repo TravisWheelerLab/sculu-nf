@@ -6,6 +6,7 @@ workflow {
     process_components(
         make_components.out.consensi, 
         make_components.out.instances_dir, 
+        make_components.out.component_alignments, 
         make_components.out.components.flatten()
     )
 }
@@ -21,6 +22,7 @@ process make_components {
     output:
         path 'sculu-out/components/component-*', emit: components
         path 'sculu-out/components/singletons', emit: singletons, optional: true
+        path 'sculu-out/components/alignment.tsv', emit: component_alignments
         path 'sculu-out/consensi.fa', emit: consensi
         path 'sculu-out/instances', emit: instances_dir
         path 'sculu-out/debug.log', emit: logfile
@@ -47,6 +49,7 @@ process process_components {
     input:
         path consensi
         path instances_dir
+        path component_alignments
         path component
 
     output:

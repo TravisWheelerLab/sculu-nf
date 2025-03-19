@@ -1,5 +1,5 @@
 run:
-	nextflow run sculu.nf -resume \
+	nextflow run sculu.nf -profile local \
 	    --consensi /Users/kyclark/wheelerlab/sculu/rust/data/tuatara/consensi.fa \
 	    --instances /Users/kyclark/wheelerlab/sculu/rust/data/tuatara/instances
 
