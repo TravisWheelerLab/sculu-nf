@@ -24,9 +24,9 @@ process make_components {
         path 'sculu-out/consensi.fa', emit: consensi
         path 'sculu-out/instances', emit: instances_dir
         path 'sculu-out/debug.log', emit: logfile
-        path 'sculu-out/consensi_cluster/blast.out', emit: consensi_blast
+        path 'sculu-out/consensi_cluster/blast.tsv', emit: consensi_blast
 
-    container 'traviswheelerlab/sculu-rs:0.1.0'
+    container 'traviswheelerlab/sculu-rs:0.2.0'
 
     script:
     """
@@ -42,7 +42,7 @@ process make_components {
 
 // --------------------------------------------------
 process process_components {
-    publishDir 'results', mode: 'cope'
+    publishDir 'results', mode: 'copy'
 
     input:
         path consensi
@@ -53,7 +53,7 @@ process process_components {
         path "sculu-out/${component}/final.fa"
         path "sculu-out/${component}.log"
 
-    container 'traviswheelerlab/sculu-rs:0.1.0'
+    container 'traviswheelerlab/sculu-rs:0.2.0'
 
     script:
     """
