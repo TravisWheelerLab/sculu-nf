@@ -3,9 +3,16 @@
 
 #FROM debian:trixie-slim
 FROM ubuntu:24.04
-RUN apt-get update && apt-get install -y wget build-essential git cmake curl vim
 
-# Install rmblastn binaries
+# Install blastp, hmmer
+RUN apt-get update && \
+    apt-get install -y wget build-essential git cmake curl vim ncbi-blast+ hmmer
+
+# Install MAFTT
+RUN wget -q https://mafft.cbrc.jp/alignment/software/mafft_7.526-1_amd64.deb && \
+    apt install ./mafft_7.526-1_amd64.deb   
+
+# Install rmblastn
 RUN wget -q https://www.repeatmasker.org/rmblast/rmblast-2.14.1+-x64-linux.tar.gz && \
     tar xf rmblast-2.14.1+-x64-linux.tar.gz && \
     cp rmblast-2.14.1/bin/* /usr/local/bin  && \
