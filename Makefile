@@ -1,10 +1,12 @@
 run:
 	nextflow run sculu.nf -profile local \
+		--alphabet dna \
+		--config   sculu.toml \
 	    --consensi /Users/kyclark/wheelerlab/sculu/rust/data/tuatara/consensi.fa \
 	    --instances /Users/kyclark/wheelerlab/sculu/rust/data/tuatara/instances
 
 hpctua:
-	nextflow run sculu.nf -profile hpc \
+	nextflow run sculu.nf -profile hpc -resume \
 	    --consensi /home/u20/kyclark/work/data/tuatara/consensi.fa \
 	    --instances /home/u20/kyclark/work/data/tuatara/instances
 
