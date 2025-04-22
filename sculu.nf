@@ -76,7 +76,7 @@ process process_components {
     script:
     """
     sculu \
-        --logfile   sculu-out/${component}.log
+        --logfile   sculu-out/${component}.log \
         cluster \
         --config    ${config} \
         --alphabet  ${alphabet} \
