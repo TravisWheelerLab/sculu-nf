@@ -1,4 +1,4 @@
-TAG = sculu-rs:0.1.0
+TAG = sculu-rs:0.3.0
 
 img:
 	docker build --platform linux/amd64 --tag $(TAG) --no-cache .
