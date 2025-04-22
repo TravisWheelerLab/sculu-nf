@@ -11,6 +11,7 @@ workflow {
     process_components(
         params.config, 
         make_components.out.consensi, 
+        make_components.out.alignments, 
         make_components.out.instances_dir, 
         make_components.out.components.flatten(),
         params.alphabet
@@ -36,12 +37,13 @@ process make_components {
     output:
         path 'sculu-out/components/component-*', emit: components
         path 'sculu-out/components/singletons', emit: singletons, optional: true
+        path 'sculu-out/components/alignment.tsv', emit: alignments
         path 'sculu-out/consensi.fa', emit: consensi
         path 'sculu-out/instances', emit: instances_dir
         path 'sculu-out/debug.log', emit: logfile
         path 'sculu-out/consensi_cluster/blast.tsv', emit: consensi_blast
 
-    container 'traviswheelerlab/sculu-rs:0.3.1'
+    container 'traviswheelerlab/sculu-rs:0.3.2'
 
     script:
     """
@@ -63,6 +65,7 @@ process process_components {
     input:
         path config
         path consensi
+        path alignments
         path instances_dir
         path component
         val  alphabet
@@ -71,19 +74,20 @@ process process_components {
         path "sculu-out/${component}/final.fa", emit: merged
         path "sculu-out/${component}.log", emit: log
 
-    container 'traviswheelerlab/sculu-rs:0.3.1'
+    container 'traviswheelerlab/sculu-rs:0.3.2'
 
     script:
     """
     sculu \
         --logfile   sculu-out/${component}.log \
         cluster \
-        --config    ${config} \
-        --alphabet  ${alphabet} \
-        --consensi  ${consensi} \
-        --instances ${instances_dir} \
-        --component ${component} \
-        --outdir    sculu-out/ \
+        --config     ${config} \
+        --alphabet   ${alphabet} \
+        --consensi   ${consensi} \
+        --alignments ${alignments} \
+        --instances  ${instances_dir} \
+        --component  ${component} \
+        --outdir     sculu-out/ \
     """
 }
 
@@ -100,7 +104,7 @@ process concatenate {
         path "sculu-out/families.fa", emit: families
         path "sculu-out/concat.log", emit: concat_log
 
-    container 'traviswheelerlab/sculu-rs:0.3.1'
+    container 'traviswheelerlab/sculu-rs:0.3.2'
 
     script:
     """
