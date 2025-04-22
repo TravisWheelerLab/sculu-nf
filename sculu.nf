@@ -47,9 +47,7 @@ process make_components {
 
     script:
     """
-    sculu \
-        --logfile   sculu-out/debug.log \
-        components  \
+    sculu --logfile sculu-out/debug.log components \
         --alphabet  ${alphabet} \
         --config    ${config} \
         --consensi  ${consensi} \
@@ -78,9 +76,7 @@ process process_components {
 
     script:
     """
-    sculu \
-        --logfile   sculu-out/${component}.log \
-        cluster \
+    sculu --logfile sculu-out/${component}.log cluster \
         --config     ${config} \
         --alphabet   ${alphabet} \
         --consensi   ${consensi} \
@@ -108,9 +104,7 @@ process concatenate {
 
     script:
     """
-    sculu \
-        --logfile    sculu-out/concat.log \
-        concat \
+    sculu --logfile sculu-out/concat.log concat \
         --consensi   ${consensi} \
         --singletons ${singletons} \
         --components ${components} \
