@@ -19,8 +19,7 @@ workflow {
     concatenate(
         make_components.out.consensi, 
         make_components.out.singletons, 
-        make_components.out.components,
-        params.outfile
+        process_components.out.merged,
     )
 }
 
@@ -47,14 +46,13 @@ process make_components {
     script:
     """
     sculu \
-        components \
-        --alphabet     ${alphabet} \
-        --config       ${config} \
-        --consensi     ${consensi} \
-        --instances    ${instances_dir} \
-        --align-matrix /usr/local/sculu/tests/inputs/matrices/25p41g.matrix \
-        --outdir       sculu-out \
-        --outfile      sculu-out/final.fa
+        --logfile   sculu-out/debug.log \
+        components  \
+        --alphabet  ${alphabet} \
+        --config    ${config} \
+        --consensi  ${consensi} \
+        --instances ${instances_dir} \
+        --outdir    sculu-out
     """
 }
 
@@ -71,22 +69,21 @@ process process_components {
 
     output:
         path "sculu-out/${component}/final.fa", emit: merged
-        path "sculu-out/${component}.log"
+        path "sculu-out/${component}.log", emit: log
 
     container 'traviswheelerlab/sculu-rs:0.3.1'
 
     script:
     """
     sculu \
+        --logfile   sculu-out/${component}.log
         cluster \
-        --config       ${config} \
-        --alphabet     ${alphabet} \
-        --consensi     ${consensi} \
-        --instances    ${instances_dir} \
-        --component    ${component} \
-        --outdir       sculu-out/ \
-        --logfile      sculu-out/${component}.log \
-        --outfile      sculu-out/${component}/final.fa
+        --config    ${config} \
+        --alphabet  ${alphabet} \
+        --consensi  ${consensi} \
+        --instances ${instances_dir} \
+        --component ${component} \
+        --outdir    sculu-out/ \
     """
 }
 
@@ -98,22 +95,21 @@ process concatenate {
         path consensi
         path singletons
         path components
-        path outfile
 
     output:
         path "sculu-out/families.fa", emit: families
+        path "sculu-out/concat.log", emit: concat_log
 
     container 'traviswheelerlab/sculu-rs:0.3.1'
 
     script:
     """
     sculu \
+        --logfile    sculu-out/concat.log \
         concat \
-        --consensi     ${consensi} \
-        --singletons   ${singletons} \
-        --components   ${components} \
-        --outdir       sculu-out/ \
-        --logfile      sculu-out/${component}.log \
-        --outfile      ${outfile}
+        --consensi   ${consensi} \
+        --singletons ${singletons} \
+        --components ${components} \
+        --outfile    sculu-out/families.fa
     """
 }
