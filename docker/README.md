@@ -3,8 +3,8 @@
 In order to push:
 
 ```
-$ docker tag sculu-rs:0.3.0 traviswheelerlab/sculu-rs:0.3.0
-$ docker push traviswheelerlab/sculu-rs:0.3.0
+$ docker tag sculu-rs:0.3.0 traviswheelerlab/sculu-rs:0.3.1
+$ docker push traviswheelerlab/sculu-rs:0.3.1
 ```
 
 ## Author
